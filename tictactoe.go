@@ -9,24 +9,20 @@ import (
 
 func main() {
 
-	TL := "_ _"
-	TM := "_ _"
-	TR := "_ _"
-	ML := "_ _"
-	MM := "_ _"
-	MR := "_ _"
-	BL := "   "
-	BM := "   "
-	BR := "   "
+	var TL, TM, TR, ML, MM, MR string = "_1_", "_2_", "_3_", "_4_", "_5_", "_6_"
+	var BL, BM, BR string = " 7 ", " 8 ", " 9 "
 
 	grid := "   |   |  " + "\n" + TL + "|" + TM + "|" + TR + "\n" + "   |   |  " + "\n" + ML + "|" + MM + "|" + MR + "\n" + "   |   |   " + "\n" + BL + "|" + BM + "|" + BR + "\n"
 	fmt.Println(grid)
 
+	//When a player gets two in a row
 	win := false
 	player := 1
 	used := []string{}
+	plays := 1
 
 	for !win {
+
 		//LEt Users know which player should go
 		fmt.Println("Player " + strconv.Itoa(player) + ":")
 
@@ -100,15 +96,38 @@ func main() {
 
 		//Make conditions if the game is a win
 		if ML == MM && MM == MR && MR != "_ _" {
+			//Middle Row
 			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
 			return
 		} else if TL == TM && TM == TR && TR != "_ _" {
+			//Top Row
 			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
 			return
 		} else if BL == BM && BM == BR && BR != "   " {
+			//Bottom Row
 			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
 			return
-		} else if 
+		} else if TR == MM && []rune(MM)[1] == []rune(BL)[1] && []rune(MM)[1] != ' ' {
+			//right to left diag
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if TL == MM && []rune(MM)[1] == []rune(BR)[1] && []rune(MM)[1] != ' ' {
+			//Left to right diag
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if TL == ML && []rune(ML)[1] == []rune(BL)[1] && []rune(ML)[1] != ' ' {
+			//Left Verticle
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if TM == MM && []rune(MM)[1] == []rune(BM)[1] && []rune(MM)[1] != ' ' {
+			//Middle Verticle
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if TR == MR && []rune(MR)[1] == []rune(BR)[1] && []rune(MR)[1] != ' ' {
+			//Right Verticle
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		}
 
 		// Change player to next user
 		if player == 1 {
@@ -116,5 +135,10 @@ func main() {
 		} else {
 			player = 1
 		}
+		if plays > 9 {
+			fmt.Println("This game was a draw! Try again")
+			return
+		}
+		plays++
 	}
 }
