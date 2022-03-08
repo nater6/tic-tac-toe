@@ -24,20 +24,20 @@ func main() {
 
 	win := false
 	player := 1
+	used := []string{}
 
 	for !win {
 		//LEt Users know which player should go
 		fmt.Println("Player " + strconv.Itoa(player) + ":")
 
 		//Make a slice to check if the location is free
-		used := []string{}
+
 		freeChoice := false
 
 		var location string
 
 		//Read the players location and check if it is free
 		for !freeChoice {
-			fmt.Println(used)
 			//Create a scanner to read the users input from the terminal
 			scanner := bufio.NewScanner(os.Stdin)
 			scanner.Scan()
@@ -46,6 +46,7 @@ func main() {
 			chooseAgain := false
 
 			//Create a for loop to check if the location is used
+
 			for i := 0; i < len(used); i++ {
 				if used[i] == loc {
 					fmt.Println("Please choose a free space on the grid")
@@ -54,13 +55,12 @@ func main() {
 				}
 			}
 
-			
-
-			if !chooseAgain {
+			if chooseAgain {
+				continue
+			} else {
 				used = append(used, loc)
 				location = loc
 				freeChoice = true
-				fmt.Println(used)
 			}
 		}
 
@@ -73,36 +73,48 @@ func main() {
 		}
 
 		switch location {
-		case "TL":
+		case "1":
 			TL = "_" + dot + "_"
-		case "TM":
+		case "2":
 			TM = "_" + dot + "_"
-		case "TR":
+		case "3":
 			TR = "_" + dot + "_"
-		case "ML":
+		case "4":
 			ML = "_" + dot + "_"
-		case "MM":
+		case "5":
 			MM = "_" + dot + "_"
-		case "MR":
+		case "6":
 			MR = "_" + dot + "_"
-		case "BL":
+		case "7":
 			BL = " " + dot + " "
-		case "BM":
+		case "8":
 			BM = " " + dot + " "
-		case "BR":
+		case "9":
 			BR = " " + dot + " "
 		default:
 			fmt.Println("Please choose a valid location on the grid")
 		}
 
+		grid := "   |   |  " + "\n" + TL + "|" + TM + "|" + TR + "\n" + "   |   |  " + "\n" + ML + "|" + MM + "|" + MR + "\n" + "   |   |   " + "\n" + BL + "|" + BM + "|" + BR + "\n"
+		fmt.Println(grid)
+
+		//Make conditions if the game is a win
+		if ML == MM && MM == MR && MR != "_ _" {
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if TL == TM && TM == TR && TR != "_ _" {
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if BL == BM && BM == BR && BR != "   " {
+			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			return
+		} else if 
+
+		// Change player to next user
 		if player == 1 {
 			player = 2
 		} else {
 			player = 1
 		}
-
-		grid := "   |   |  " + "\n" + TL + "|" + TM + "|" + TR + "\n" + "   |   |  " + "\n" + ML + "|" + MM + "|" + MR + "\n" + "   |   |   " + "\n" + BL + "|" + BM + "|" + BR + "\n"
-		fmt.Println(grid)
-
 	}
 }
