@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 )
 
 func main() {
@@ -13,18 +12,32 @@ func main() {
 	var BL, BM, BR string = " 7 ", " 8 ", " 9 "
 
 	grid := "   |   |  " + "\n" + TL + "|" + TM + "|" + TR + "\n" + "   |   |  " + "\n" + ML + "|" + MM + "|" + MR + "\n" + "   |   |   " + "\n" + BL + "|" + BM + "|" + BR + "\n"
-	fmt.Println(grid)
+	
 
 	//When a player gets two in a row
 	win := false
-	player := 1
-	used := []string{}
 	plays := 1
+	used := []string{}
+
+	scanner1 := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter player 1's name:")
+	scanner1.Scan()
+	player1 := scanner1.Text()
+
+	scanner2 := bufio.NewScanner(os.Stdin)
+	fmt.Println("Please enter player 2's name:")
+	scanner2.Scan()
+	player2 := scanner2.Text()
+
+	fmt.Println(grid)
+	fmt.Println("Let's Go!")
+
+	name := player1
 
 	for !win {
 
 		//LEt Users know which player should go
-		fmt.Println("Player " + strconv.Itoa(player) + ":")
+		fmt.Println(name + ":")
 
 		//Make a slice to check if the location is free
 
@@ -62,7 +75,7 @@ func main() {
 
 		var dot string
 
-		if player == 1 {
+		if name == player1 {
 			dot = "X"
 		} else {
 			dot = "O"
@@ -97,44 +110,45 @@ func main() {
 		//Make conditions if the game is a win
 		if ML == MM && MM == MR && MR != "_ _" {
 			//Middle Row
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TL == TM && TM == TR && TR != "_ _" {
 			//Top Row
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if BL == BM && BM == BR && BR != "   " {
 			//Bottom Row
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TR == MM && []rune(MM)[1] == []rune(BL)[1] && []rune(MM)[1] != ' ' {
 			//right to left diag
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TL == MM && []rune(MM)[1] == []rune(BR)[1] && []rune(MM)[1] != ' ' {
 			//Left to right diag
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TL == ML && []rune(ML)[1] == []rune(BL)[1] && []rune(ML)[1] != ' ' {
 			//Left Verticle
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TM == MM && []rune(MM)[1] == []rune(BM)[1] && []rune(MM)[1] != ' ' {
 			//Middle Verticle
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		} else if TR == MR && []rune(MR)[1] == []rune(BR)[1] && []rune(MR)[1] != ' ' {
 			//Right Verticle
-			fmt.Println("Congratulations Player " + strconv.Itoa(player) + " YOU WIN!")
+			fmt.Println("Congratulations " + name + " YOU WIN!")
 			return
 		}
 
 		// Change player to next user
-		if player == 1 {
-			player = 2
+		if name == player1 {
+			name = player2
 		} else {
-			player = 1
+			name = player1
 		}
+
 		if plays > 9 {
 			fmt.Println("This game was a draw! Try again")
 			return
