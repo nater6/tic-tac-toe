@@ -36,7 +36,7 @@ func main() {
 
 	for !win {
 
-		//LEt Users know which player should go
+		//Let Users know which player should go
 		fmt.Println(name + ":")
 
 		//Make a slice to check if the location is free
@@ -149,7 +149,7 @@ func main() {
 			name = player1
 		}
 
-		if plays > 9 {
+		if plays >= 9 {
 			fmt.Println("This game was a draw! Try again")
 			return
 		}
